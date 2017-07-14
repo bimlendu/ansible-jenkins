@@ -1,0 +1,8 @@
+---
+- name: Setup Jenkins
+  hosts: localhost
+  user: root
+  connection: local
+
+  roles:
+    - jenkins

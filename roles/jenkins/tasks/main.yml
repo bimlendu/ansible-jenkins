@@ -1,0 +1,35 @@
+---
+- name: Install nfs/efs client packages.
+  apt:
+    name:
+      - nfs-common
+    state: installed
+
+- name: Mount EFS filesystem.
+  mount:
+    path: "{{ jenkins_home }}"
+    src: "{{ efs_filesystem_dns }}:/" 
+    fstype: nfs4
+    opts: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,_netdev
+    state: mounted
+
+- name: Add Jenkins apt repository key.
+  apt_key:
+    url: "{{ jenkins_repo_key_url }}"
+    state: present
+
+- name: Add Jenkins apt repository.
+  apt_repository:
+    repo: "{{ jenkins_repo_url }}"
+    state: present
+    update_cache: yes
+
+- name: Install packages.
+  apt:
+    name:
+      - jenkins={{ jenkins_version }}
+    state: installed
+
+# Make sure Jenkins starts, then configure Jenkins.
+- name: Ensure Jenkins is started and runs on startup.
+  service: name=jenkins state=started enabled=yes
