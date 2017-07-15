@@ -24,12 +24,42 @@
     state: present
     update_cache: yes
 
+- name: Prevent jenkins from starting up on install.
+  copy:
+    src: "{{ role_path }}/files/policy-rc.d"
+    dest: /usr/sbin/policy-rc.d
+
 - name: Install packages.
   apt:
     name:
       - jenkins={{ jenkins_version }}
     state: installed
 
-# Make sure Jenkins starts, then configure Jenkins.
+- name: Create custom init scripts directory.
+  file:
+    path: "{{ jenkins_home }}/init.groovy.d"
+    state: directory
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    mode: 0775
+
+- name: configure default users
+  template:
+    src: basic-security.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    mode: 0775
+
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
+
+- name: Remove Jenkins security init scripts after first startup.
+  file:
+    path: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    state: absent
+
+- name: Remove policy-rc.d.
+  file:
+    path: /usr/sbin/policy-rc.d
+    state: absent
