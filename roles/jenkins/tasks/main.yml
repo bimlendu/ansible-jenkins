@@ -63,7 +63,7 @@
   lineinfile:
     dest: /etc/default/jenkins
     regexp: '^JAVA_ARGS='
-    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.UpgradeWizard.show=false"'
 
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
