@@ -62,16 +62,6 @@
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
 
-- name: Remove Jenkins security init scripts after first startup.
-  file:
-    path: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
-    state: absent
-
-- name: Remove Jenkins plugins install scripts after first startup.
-  file:
-    path: "{{ jenkins_home }}/init.groovy.d/install-plugins.groovy"
-    state: absent
-
 - name: Remove policy-rc.d.
   file:
     path: /usr/sbin/policy-rc.d
