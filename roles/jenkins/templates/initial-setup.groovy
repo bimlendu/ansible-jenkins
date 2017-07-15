@@ -12,7 +12,7 @@ def installed = false
 def initialized = false
 def pluginParameter = "{{ jenkins_plugins }}"
 def plugins = pluginParameter.split()
-logger.info(plugins)
+logger.info('' + plugins)
 def jenkins = Jenkins.getInstance()
 def pm = jenkins.getPluginManager()
 def uc = jenkins.getUpdateCenter()
