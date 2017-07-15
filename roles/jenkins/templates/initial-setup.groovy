@@ -51,7 +51,6 @@ hudsonRealm.createAccount('{{ jenkins_admin_username }}','{{ jenkins_admin_passw
 jenkins.setSecurityRealm(hudsonRealm)
 
 def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-jenkins.setAllowAnonymousRead(false)
 jenkins.setAuthorizationStrategy(strategy)
 jenkins.save()
 
