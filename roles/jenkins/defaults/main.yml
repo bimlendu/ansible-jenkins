@@ -8,4 +8,4 @@ jenkins_admin_username: admin
 jenkins_admin_password: admin
 jenkins_process_user: jenkins
 jenkins_process_group: jenkins
-jenkins_plugins: workflow-aggregator golang credentials-binding git timestamper ws-cleanup junit simple-theme-plugin pipeline-stage-view
+jenkins_plugins: workflow-aggregator golang credentials-binding git timestamper ws-cleanup junit simple-theme-plugin matrix-auth

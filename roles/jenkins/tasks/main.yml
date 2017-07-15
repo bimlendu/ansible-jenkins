@@ -43,18 +43,10 @@
     group: "{{ jenkins_process_group }}"
     mode: 0775
 
-- name: Add users script.
+- name: Add intial setup script.
   template:
-    src: basic-security.groovy
-    dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
-    owner: "{{ jenkins_process_user }}"
-    group: "{{ jenkins_process_group }}"
-    mode: 0775
-
-- name: Add plugins install script.
-  template:
-    src: install-plugins.groovy
-    dest: "{{ jenkins_home }}/init.groovy.d/install-plugins.groovy"
+    src: initial-setup.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/initial-setup.groovy"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
