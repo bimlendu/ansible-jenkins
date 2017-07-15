@@ -4,5 +4,5 @@ nginx_repo_url: deb http://nginx.org/packages/ubuntu/ xenial nginx
 jenkins_repo_url: deb https://pkg.jenkins.io/debian-stable binary/
 jenkins_repo_key_url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
 jenkins_version: "{{ ansible_env.JENKINS_VERSION }}"
-jenkins_home: "{{ ansible_env.JENKINS_HOME }}"
+jenkins_home: /var/lib/jenkins
 efs_filesystem_dns: "{{ ansible_env.EFS_FILESYSTEM_DNS }}"
