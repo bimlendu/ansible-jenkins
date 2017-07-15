@@ -59,11 +59,13 @@
     group: "{{ jenkins_process_group }}"
     mode: 0775
 
-- name: Disable setup wizard.
-  lineinfile:
-    dest: /etc/default/jenkins
-    regexp: '^JAVA_ARGS='
-    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.UpgradeWizard.show=false"'
+- name: Bypass - jenkins.install.InstallUtil.lastExecVersion
+  copy:
+    src: "{{ jenkins_home }}/jenkins.install.UpgradeWizard.state"
+    dest: "{{ jenkins_home }}/jenkins.install.InstallUtil.lastExecVersion"
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    remote_src: True
 
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
