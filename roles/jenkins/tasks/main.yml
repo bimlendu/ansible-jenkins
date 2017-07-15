@@ -61,7 +61,7 @@
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
-    src: "{{ jenkins_home }}/jenkins.install.UpgradeWizard.state"
+    src: "{{ jenkins_version }}"
     dest: "{{ jenkins_home }}/jenkins.install.InstallUtil.lastExecVersion"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
