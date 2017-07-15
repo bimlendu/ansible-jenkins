@@ -46,13 +46,13 @@ if (installed) {
 
 logger.info('Creating initial user {{ jenkins_admin_username }}.')
 
-jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
-jenkins.setAuthorizationStrategy(new GlobalMatrixAuthorizationStrategy())
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount('{{ jenkins_admin_username }}','{{ jenkins_admin_password }}')
+jenkins.setSecurityRealm(hudsonRealm)
 
-def user = jenkins.getSecurityRealm().createAccount({{ jenkins_admin_username }}, {{ jenkins_admin_password }})
-user.save()
-
-jenkins.getAuthorizationStrategy().add(Jenkins.ADMINISTER, {{ jenkins_admin_username }})
+def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+jenkins.setAllowAnonymousRead(false)
+jenkins.setAuthorizationStrategy(strategy)
 jenkins.save()
 
 logger.info('Enabling slave-to-master access control.')
