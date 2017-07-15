@@ -59,6 +59,12 @@
     group: "{{ jenkins_process_group }}"
     mode: 0775
 
+- name: Disable setup wizard.
+  lineinfile:
+    dest: /etc/default/jenkins
+    regexp: '^JAVA_ARGS='
+    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
 
