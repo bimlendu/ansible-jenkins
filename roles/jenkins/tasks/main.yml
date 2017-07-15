@@ -43,10 +43,18 @@
     group: "{{ jenkins_process_group }}"
     mode: 0775
 
-- name: configure default users
+- name: Add users script.
   template:
     src: basic-security.groovy
     dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    mode: 0775
+
+- name: Add plugins install script.
+  template:
+    src: install-plugins.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/install-plugins.groovy"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
@@ -57,6 +65,11 @@
 - name: Remove Jenkins security init scripts after first startup.
   file:
     path: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    state: absent
+
+- name: Remove Jenkins plugins install scripts after first startup.
+  file:
+    path: "{{ jenkins_home }}/init.groovy.d/install-plugins.groovy"
     state: absent
 
 - name: Remove policy-rc.d.
