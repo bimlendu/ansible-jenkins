@@ -1,0 +1,6 @@
+---
+- name: Download and unzip sonarqube.
+  unarchive:
+    src: "{{ sonarqube_download_url }}"
+    dest: /opt/
+    remote_src: True

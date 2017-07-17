@@ -1,0 +1,8 @@
+---
+sonarqube_version: "{{ ansible_env.SONARQUBE_VERSION }}"
+sonarqube_download_url: https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-{{ sonarqube_version }}.zip
+sonarqube_install_dir: /opt/sonarqube
+sonarqube_db_host: "{{ ansible_env.SONARQUBE_DB_HOST }}"
+sonarqube_db_name: "{{ ansible_env.SONARQUBE_DB_NAME }}"
+sonarqube_db_user: "{{ ansible_env.SONARQUBE_DB_USER }}"
+sonarqube_db_password: "{{ ansible_env.SONARQUBE_DB_PASSWORD }}"
