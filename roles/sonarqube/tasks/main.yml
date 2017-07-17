@@ -10,3 +10,19 @@
     src: "{{ sonarqube_download_url }}"
     dest: /opt/
     remote_src: True
+
+- name: Move sonarqube to {{ sonarqube_install_dir }}
+  command: mv /opt/sonarqube-{{ sonarqube_version }} {{ sonarqube_install_dir }}
+
+- name: Configure sonar jdbc properties.
+  copy:
+    src: "{{ role_path }}/files/sonar.properties"
+    dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
+
+- name: Add sonarqube systemd unit.
+  template:
+    src: sonar.service
+    dest: /etc/systemd/system/sonar.service
+
+- name: Enable/Start Sonarqube
+  systemd: state=started name=sonar.service daemon_reload=yes enabled=yes
