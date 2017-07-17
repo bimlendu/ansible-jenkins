@@ -1,8 +1,9 @@
 ---
-- name: Setup Jenkins
+- name: Setup Jenkins/SonarQube
   hosts: localhost
   user: root
   connection: local
 
   roles:
     - jenkins
+    - sonarqube
