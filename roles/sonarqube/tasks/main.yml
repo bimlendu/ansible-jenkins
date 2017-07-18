@@ -21,6 +21,14 @@
   notify:
     - restart sonar
 
+- name: Download sonar-golang plugin
+  get_url:
+    url: "{{ sonarqube_golang_plugin_url }}"
+    dest: "{{ sonarqube_install_dir }}/extensions/plugins/"
+    mode: 0644
+  notify:
+    - restart sonar
+
 - name: Add sonarqube systemd unit.
   template:
     src: sonar.service

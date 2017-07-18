@@ -6,3 +6,4 @@ sonarqube_db_host: "{{ ansible_env.SONARQUBE_DB_HOST }}"
 sonarqube_db_name: "{{ ansible_env.SONARQUBE_DB_NAME }}"
 sonarqube_db_user: "{{ ansible_env.SONARQUBE_DB_USER }}"
 sonarqube_db_password: "{{ ansible_env.SONARQUBE_DB_PASSWORD }}"
+sonarqube_golang_plugin_url: https://github.com/uartois/sonar-golang/releases/download/v1.2.9-gamma/sonar-golang-plugin-1.2.9-gamma.jar
