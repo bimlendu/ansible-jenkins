@@ -11,8 +11,18 @@
     dest: /opt/
     remote_src: True
 
+- name: check sonar install_dir
+  stat: path={{ sonarqube_install_dir }}
+  register: sonar_exists
+
+- name: Move foo to bar
+  command: mv /path/to/foo /path/to/bar
+  when: foo_stat.stat.exists
+
+
 - name: Move sonarqube to {{ sonarqube_install_dir }}
   command: mv /opt/sonarqube-{{ sonarqube_version }} {{ sonarqube_install_dir }}
+  when: not sonar_exists.stat.exists
 
 - name: Configure sonar jdbc properties.
   template:
