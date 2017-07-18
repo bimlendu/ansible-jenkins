@@ -11,7 +11,7 @@
     dest: /opt/
     remote_src: True
 
-- name: check sonar install_dir
+- name: Check sonar installation
   stat: path={{ sonarqube_install_dir }}
   register: sonar_exists
 
