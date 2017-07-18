@@ -18,11 +18,15 @@
   template:
     src: sonar.properties
     dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
+  notify:
+    - restart sonar
 
 - name: Add sonarqube systemd unit.
   template:
     src: sonar.service
     dest: /etc/systemd/system/sonar.service
+  notify:
+    - restart sonar
 
 - name: Enable/Start Sonarqube
   systemd: state=started name=sonar.service daemon_reload=yes enabled=yes
