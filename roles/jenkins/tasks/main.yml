@@ -24,11 +24,6 @@
     state: present
     update_cache: yes
 
-- name: Prevent jenkins from starting up on install.
-  copy:
-    src: "{{ role_path }}/files/policy-rc.d"
-    dest: /usr/sbin/policy-rc.d
-
 - name: Install packages.
   apt:
     name:
@@ -42,6 +37,8 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
+  notify:
+    - restart jenkins
 
 - name: Add intial setup script.
   template:
@@ -50,6 +47,8 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
+  notify:
+    - restart jenkins
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
@@ -58,11 +57,8 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     remote_src: True
+  notify:
+    - restart jenkins
 
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
-
-- name: Remove policy-rc.d.
-  file:
-    path: /usr/sbin/policy-rc.d
-    state: absent
