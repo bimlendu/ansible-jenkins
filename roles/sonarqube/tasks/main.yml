@@ -15,8 +15,8 @@
   command: mv /opt/sonarqube-{{ sonarqube_version }} {{ sonarqube_install_dir }}
 
 - name: Configure sonar jdbc properties.
-  copy:
-    src: "{{ role_path }}/files/sonar.properties"
+  template:
+    src: sonar.properties
     dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
 
 - name: Add sonarqube systemd unit.
