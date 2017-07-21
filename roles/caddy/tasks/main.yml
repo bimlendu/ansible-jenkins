@@ -71,3 +71,4 @@
 
 - name: Enable/Start caddy-server
   systemd: state=started name=caddy.service daemon_reload=yes enabled=yes
+  ignore_errors: yes
