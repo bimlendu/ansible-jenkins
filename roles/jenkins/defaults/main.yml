@@ -9,3 +9,5 @@ jenkins_admin_password: admin
 jenkins_process_user: jenkins
 jenkins_process_group: jenkins
 jenkins_plugins: workflow-aggregator golang credentials-binding git timestamper ws-cleanup junit blueocean sonar pipeline-aws http_request
+sonar_server_url: http://localhost:9000/
+sonar_runner_version: 3.0.3.778
