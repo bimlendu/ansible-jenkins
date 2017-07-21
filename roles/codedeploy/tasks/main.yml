@@ -1,0 +1,40 @@
+- name: Install CodeDeploy dependecies.
+  apt:
+    name: {{item}}
+    state: present
+  with_items:
+    - ruby
+    - wget
+    - python-pip
+
+- name: "Check if CodeDeploy is already installed"
+  command: dpkg-query -W 'codedeploy-agent'
+  ignore_errors: True
+  register: is_codedeploy_installed
+
+- name: "Install Packages | pip"
+  pip:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - awscli
+
+- name: "Get Instance Metadata"
+  action: ec2_facts
+
+- name: "Get CodeDeploy zip"
+  get_url:
+    url: "https://aws-codedeploy-{{ ansible_ec2_placement_region }}.s3.amazonaws.com/latest/install"
+    dest: /tmp/codedeploy-install
+    mode: 0755
+    group: root
+    owner: root
+  when: is_codedeploy_installed|failed
+
+- name: "Codedeploy Install"
+  become: true
+  command: /tmp/codedeploy-install auto
+  when: is_codedeploy_installed|failed
+
+- name: Ensure CodeDeployAgent is started and runs on startup.
+  service: name=codedeploy-agent state=started enabled=yes
