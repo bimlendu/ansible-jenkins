@@ -1,19 +1,7 @@
 ---
 hugo_version: "0.25.1"
 hugo_download_url: https://github.com/gohugoio/hugo/releases/download/v{{ hugo_version }}/hugo_{{ hugo_version }}_Linux-64bit.deb
-
 initial_caddy_version: https://github.com/mholt/caddy/releases/download/v0.10.4/caddy_v0.10.4_linux_amd64.tar.gz
 caddy_binary: /usr/local/bin/caddy
 caddy_user: www-data
 caddy_group: www-data
-
-jenkins_repo_url: deb https://pkg.jenkins.io/debian-stable binary/
-jenkins_repo_key_url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-jenkins_version: "{{ ansible_env.JENKINS_VERSION }}"
-jenkins_home: /var/lib/jenkins
-efs_filesystem_dns: "{{ ansible_env.EFS_FILESYSTEM_DNS }}"
-jenkins_admin_username: admin
-jenkins_admin_password: admin
-jenkins_process_user: jenkins
-jenkins_process_group: jenkins
-jenkins_plugins: workflow-aggregator golang credentials-binding git timestamper ws-cleanup junit blueocean sonar pipeline-aws
