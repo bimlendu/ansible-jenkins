@@ -8,3 +8,4 @@
     - jenkins
     - sonarqube
     - caddy
+    - codedeploy
