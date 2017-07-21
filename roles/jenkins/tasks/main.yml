@@ -57,7 +57,7 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     remote_src: True
-  register: task_result
+    register: task_result
     until: task_result.rc == 0
     retries: 10
     delay: 5
