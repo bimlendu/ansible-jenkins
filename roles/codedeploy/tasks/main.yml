@@ -1,6 +1,6 @@
 - name: Install CodeDeploy dependecies.
   apt:
-    name: {{item}}
+    name: "{{ item }}"
     state: present
   with_items:
     - ruby
