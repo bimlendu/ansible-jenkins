@@ -30,6 +30,14 @@
       - jenkins={{ jenkins_version }}
     state: installed
 
+- name: Disable Jenkins CLI over Remoting
+  copy:
+    src: jenkins.CLI.xml
+    dest: "{{ jenkins_home }}/jenkins.CLI.xml"
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    mode: 0644
+
 - name: Create custom init scripts directory.
   file:
     path: "{{ jenkins_home }}/init.groovy.d"
