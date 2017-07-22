@@ -1,5 +1,5 @@
 ---
-- name: Setup Jenkins/SonarQube
+- name: Setup Jenkins/SonarQube/Caddy/CodeDeploy on a host
   hosts: localhost
   user: root
   connection: local
