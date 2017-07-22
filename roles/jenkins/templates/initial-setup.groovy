@@ -5,23 +5,7 @@ import hudson.*
 import hudson.model.*
 import hudson.security.*
 import hudson.tools.*
-import jenkins.security.s2m.AdminWhitelistRule
-import org.jenkinsci.plugins.golang.*
-import hudson.plugins.sonar.*
-import hudson.plugins.sonar.model.TriggersConfig
-import hudson.plugins.sonar.utils.SQServerVersions
 import jenkins.model.Jenkins
-import org.jenkinsci.plugins.workflow.job.WorkflowJob
-import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition
-import hudson.plugins.git.GitSCM
-import com.cloudbees.plugins.credentials.*
-import com.cloudbees.plugins.credentials.common.*
-import com.cloudbees.plugins.credentials.domains.*
-import com.cloudbees.plugins.credentials.impl.*
-import org.jenkinsci.plugins.plaincredentials.*
-import org.jenkinsci.plugins.plaincredentials.impl.*
-import hudson.util.Secret
-
 import java.util.logging.Logger
 
 def logger = Logger.getLogger("")
@@ -92,6 +76,7 @@ Jenkins.instance.getInjector().getInstance(AdminWhitelistRule.class)
 // Approve scripts
 logger.info('Pre-approving required signatures.')
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
+import jenkins.security.s2m.AdminWhitelistRule
 ScriptApproval sa = ScriptApproval.get();
 signatures = [
   "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.net.URL",
@@ -108,11 +93,12 @@ signatures.each {signature ->
 }
 
 // Configure Go.
+import org.jenkinsci.plugins.golang.*
 logger.info('Configuring Golang')
 def desc_GolangInst = jenkins.getDescriptor("org.jenkinsci.plugins.golang.GolangInstallation")
 def golangInstaller = new GolangInstaller(golang_version)
-def installSourceProperty = new InstallSourceProperty([golangInstaller])
-def golang_inst = new GolangInstallation("GO_GO", "", [installSourceProperty])
+def goInstallSourceProperty = new InstallSourceProperty([golangInstaller])
+def golang_inst = new GolangInstallation("GO_GO", "", [goInstallSourceProperty])
 def golang_installations = desc_GolangInst.getInstallations()
 golang_installations += golang_inst
 desc_GolangInst.setInstallations((GolangInstallation[]) golang_installations)
@@ -120,6 +106,9 @@ desc_GolangInst.save()
 jenkins.save()
 
 // Setup SonarQube Server
+import hudson.plugins.sonar.*
+import hudson.plugins.sonar.model.TriggersConfig
+import hudson.plugins.sonar.utils.SQServerVersions
 logger.info('Configuring SonarQube.')
 def SonarGlobalConfiguration sonar_conf = jenkins.getDescriptor(SonarGlobalConfiguration.class)
 def sonar_inst = new SonarInstallation(
@@ -148,8 +137,8 @@ jenkins.save()
 logger.info('Configuring SonarScanner')
 def desc_SonarRunnerInst = jenkins.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
 def sonarRunnerInstaller = new SonarRunnerInstaller(sonar_scanner_version)
-def installSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
-def sonarRunner_inst = new SonarRunnerInstallation("SonarQubeScanner", "", [installSourceProperty])
+def sonarInstallSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
+def sonarRunner_inst = new SonarRunnerInstallation("SonarQubeScanner", "", [sonarInstallSourceProperty])
 def sonar_runner_installations = desc_SonarRunnerInst.getInstallations()
 sonar_runner_installations += sonarRunner_inst
 desc_SonarRunnerInst.setInstallations((SonarRunnerInstallation[]) sonar_runner_installations)
@@ -158,6 +147,13 @@ jenkins.save()
 
 // Add Credetials
 logger.info('Adding required credentials.')
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.common.*
+import com.cloudbees.plugins.credentials.domains.*
+import com.cloudbees.plugins.credentials.impl.*
+import org.jenkinsci.plugins.plaincredentials.*
+import org.jenkinsci.plugins.plaincredentials.impl.*
+import hudson.util.Secret
 domain = Domain.global()
 store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 
@@ -194,6 +190,9 @@ store.addCredentials(domain, msg_providerDst)
 
 // Create job
 logger.info('Creating first pipeline job.')
+import org.jenkinsci.plugins.workflow.job.WorkflowJob
+import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition
+import hudson.plugins.git.GitSCM
 WorkflowJob job = Jenkins.instance.createProject(WorkflowJob, caddy_pipeline_job)
 def definition = new CpsScmFlowDefinition(new GitSCM(caddy_pipeline_repo),caddy_pipeline_file)
 definition.lightweight = true
