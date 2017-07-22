@@ -9,9 +9,6 @@ import jenkins.model.Jenkins
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
 import jenkins.security.s2m.AdminWhitelistRule
 import org.jenkinsci.plugins.golang.*
-import hudson.plugins.sonar.*
-import hudson.plugins.sonar.model.TriggersConfig
-import hudson.plugins.sonar.utils.SQServerVersions
 import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
@@ -26,9 +23,6 @@ import java.util.logging.Logger
 
 def logger = Logger.getLogger("")
 def jenkins = Jenkins.getInstance()
-
-def sonarqube_server_url = "{{ sonarqube_server_url }}"
-def sonar_scanner_version = "{{ sonar_scanner_version }}"
 
 def caddy_pipeline_job = "{{ caddy_pipeline_job }}"
 def caddy_pipeline_repo = "{{ caddy_pipeline_repo }}"
@@ -84,43 +78,6 @@ def golang_installations = desc_GolangInst.getInstallations()
 golang_installations += golang_inst
 desc_GolangInst.setInstallations((GolangInstallation[]) golang_installations)
 desc_GolangInst.save()
-jenkins.save()
-
-// Setup SonarQube Server
-logger.info('Configuring SonarQube.')
-def SonarGlobalConfiguration sonar_conf = jenkins.getDescriptor(SonarGlobalConfiguration.class)
-def sonar_inst = new SonarInstallation(
-  "Sonar", // Name
-  sonarqube_server_url,
-  SQServerVersions.SQ_5_3_OR_HIGHER,
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  new TriggersConfig(),
-  "",
-  "",
-  ""
-)
-
-def sonar_installations = sonar_conf.getInstallations()
-sonar_installations += sonar_inst
-sonar_conf.setInstallations((SonarInstallation[]) sonar_installations)
-sonar_conf.save()
-jenkins.save()
-
-// SonarScanner
-logger.info('Configuring SonarScanner')
-def desc_SonarRunnerInst = jenkins.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
-def sonarRunnerInstaller = new SonarRunnerInstaller(sonar_scanner_version)
-def sonarInstallSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
-def sonarRunner_inst = new SonarRunnerInstallation("SonarQubeScanner", "", [sonarInstallSourceProperty])
-def sonar_runner_installations = desc_SonarRunnerInst.getInstallations()
-sonar_runner_installations += sonarRunner_inst
-desc_SonarRunnerInst.setInstallations((SonarRunnerInstallation[]) sonar_runner_installations)
-desc_SonarRunnerInst.save()
 jenkins.save()
 
 // Add Credetials
