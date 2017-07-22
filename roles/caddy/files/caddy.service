@@ -1,14 +1,9 @@
 [Unit]
 Description=Caddy HTTP/2 web server
 Documentation=https://caddyserver.com/docs
-After=network-online.target
-Wants=network-online.target systemd-networkd-wait-online.service
+After=network.target
 
 [Service]
-Restart=on-failure
-StartLimitInterval=86400
-StartLimitBurst=5
-
 ; User and group the process will run as.
 User=www-data
 Group=www-data

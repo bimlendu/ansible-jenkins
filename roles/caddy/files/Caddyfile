@@ -1,5 +1,6 @@
 0.0.0.0
-root /var/www
-hugo {
-  database site.db
+
+root /var/www/public
+hugo /var/www {
+  database hugo.db
 }

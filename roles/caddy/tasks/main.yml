@@ -48,7 +48,15 @@
     path: /var/www
     owner: "{{ caddy_user }}"
     group: "{{ caddy_group }}"
-    mode: 0555
+    mode: 0755
+    state: directory
+
+- name: Create site dir.
+  file:
+    path: /var/www/public
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    mode: 0755
     state: directory
 
 - name: Create caddyfile
