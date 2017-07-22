@@ -91,7 +91,7 @@ logger.info('Configuring SonarQube.')
 def SonarGlobalConfiguration sonar_conf = jenkins.getDescriptor(SonarGlobalConfiguration.class)
 def sonar_inst = new SonarInstallation(
   "Sonar", // Name
-  sonar_server_url,
+  sonarqube_server_url,
   SQServerVersions.SQ_5_3_OR_HIGHER,
   "",
   "",
