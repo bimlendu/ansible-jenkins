@@ -3,14 +3,25 @@ jenkins_repo_url: deb https://pkg.jenkins.io/debian-stable binary/
 jenkins_repo_key_url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
 jenkins_version: "{{ ansible_env.JENKINS_VERSION }}"
 jenkins_home: /var/lib/jenkins
-efs_filesystem_dns: "{{ ansible_env.EFS_FILESYSTEM_DNS }}"
-jenkins_admin_username: admin
-jenkins_admin_password: admin
 jenkins_process_user: jenkins
 jenkins_process_group: jenkins
-jenkins_plugins: workflow-aggregator golang credentials-binding git timestamper ws-cleanup junit blueocean sonar pipeline-aws http_request
-sonar_server_url: http://localhost:9000/
-sonar_runner_version: 3.0.3.778
-caddy_pipeline_job: caddy-hugo
-caddy_pipeline_repo: https://github.com/bimlendu/grasshopper.git
-caddy_pipeline_file: Jenkinsfile
+
+efs_filesystem_dns: "{{ ansible_env.EFS_FILESYSTEM_DNS }}"
+
+jenkins_admin_username: "{{ ansible_env.JENKINS_ADMIN_USERNAME }}"
+jenkins_admin_password: "{{ ansible_env.JENKINS_ADMIN_PASSWORD }}"
+jenkins_plugins: "{{ ansible_env.jenkins_plugins }}"
+
+sonar_server_url: "{{ ansible_env.SONAR_SERVER_URL }}"
+sonar_runner_version: "{{ ansible_env.SONAR_RUNNER_VERSION }}"
+
+caddy_pipeline_job: "{{ ansible_env.CADDY_PIPELINE_JOB }}"
+caddy_pipeline_repo: "{{ ansible_env.CADDY_PIPELINE_REPO }}"
+caddy_pipeline_file: "{{ ansible_env.CADDY_PIPELINE_FILE }}"
+
+plivo_auth_id: "{{ ansible_env.PLIVO_AUTH_ID }}"
+plivo_auth_token: "{{ ansible_env.PLIVO_AUTH_TOKEN }}"
+plivo_src_phone: "{{ ansible_env.PLIVO_SRC_PHONE }}"
+plivo_dest_phone: "{{ ansible_env.PLIVO_DEST_PHONE }}"
+
+statuspage_api_key: "{{ ansible_env.STATUSPAGE_API_KEY }}"
