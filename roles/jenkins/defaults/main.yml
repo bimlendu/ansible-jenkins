@@ -12,6 +12,8 @@ jenkins_admin_username: "{{ ansible_env.JENKINS_ADMIN_USERNAME }}"
 jenkins_admin_password: "{{ ansible_env.JENKINS_ADMIN_PASSWORD }}"
 jenkins_plugins: "{{ ansible_env.JENKINS_PLUGINS }}"
 
+golang_version: "{{ ansible_env.GOLANG_VERSION }}"
+
 sonarqube_server_url: "{{ ansible_env.SONARQUBE_SERVER_URL }}"
 sonar_scanner_version: "{{ ansible_env.SONAR_SCANNER_VERSION }}"
 
