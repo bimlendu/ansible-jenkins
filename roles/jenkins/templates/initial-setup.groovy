@@ -33,17 +33,17 @@ def jenkins = Jenkins.getInstance()
 def pm = jenkins.getPluginManager()
 def uc = jenkins.getUpdateCenter()
 
-def sonar_server_url = "{{ sonar_server_url }}"
-def sonar_runner_version = "{{ sonar_runner_version }}"
+def sonarqube_server_url = "{{ sonarqube_server_url }}"
+def sonar_scanner_version = "{{ sonar_scanner_version }}"
 
 def caddy_pipeline_job = "{{ caddy_pipeline_job }}"
 def caddy_pipeline_repo = "{{ caddy_pipeline_repo }}"
 def caddy_pipeline_file = "{{ caddy_pipeline_file }}"
 
-def plivo_auth_id = "{{ plivo_auth_id }}"
-def plivo_auth_token = "{{ plivo_auth_token }}"
-def plivo_src_phone = "{{ plivo_src_phone }}"
-def plivo_dest_phone = "{{ plivo_dest_phone }}"
+def msg_provider_auth_id = "{{ msg_provider_auth_id }}"
+def msg_provider_auth_token = "{{ msg_provider_auth_token }}"
+def msg_provider_src_phone = "{{ msg_provider_src_phone }}"
+def msg_provider_dest_phone = "{{ msg_provider_dest_phone }}"
 def statuspage_api_key = "{{ statuspage_api_key }}"
 
 // Install all plugins
@@ -147,7 +147,7 @@ jenkins.save()
 // SonarScanner
 logger.info('Configuring SonarScanner')
 def desc_SonarRunnerInst = jenkins.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
-def sonarRunnerInstaller = new SonarRunnerInstaller(sonar_runner_version)
+def sonarRunnerInstaller = new SonarRunnerInstaller(sonar_scanner_version)
 def installSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
 def sonarRunner_inst = new SonarRunnerInstallation("SonarQubeScanner", "", [installSourceProperty])
 def sonar_runner_installations = desc_SonarRunnerInst.getInstallations()
@@ -161,12 +161,12 @@ logger.info('Adding required credentials.')
 domain = Domain.global()
 store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 
-plivoAuth = new UsernamePasswordCredentialsImpl(
+msg_providerAuth = new UsernamePasswordCredentialsImpl(
   CredentialsScope.GLOBAL,
-  "plivo",
-  "Plivo Auth",
-  plivo_auth_id,
-  plivo_auth_token
+  "msg_provider",
+  "MSG Provdier Auth",
+  msg_provider_auth_id,
+  msg_provider_auth_token
 )
 
 statuspageAPIKey = new StringCredentialsImpl(
@@ -175,22 +175,22 @@ CredentialsScope.GLOBAL,
 "statuspage.io API Key",
 Secret.fromString(statuspage_api_key))
 
-plivoSrc = new StringCredentialsImpl(
+msg_providerSrc = new StringCredentialsImpl(
 CredentialsScope.GLOBAL,
 "srcPhone",
-"Plivo src phone number",
-Secret.fromString(plivo_src_phone))
+"MSG Provdier src phone number",
+Secret.fromString(msg_provider_src_phone))
 
-plivoDst = new StringCredentialsImpl(
+msg_providerDst = new StringCredentialsImpl(
 CredentialsScope.GLOBAL,
 "destPhone",
-"Plivo dst phone number",
-Secret.fromString(plivo_dest_phone))
+"MSG Provdier dst phone number",
+Secret.fromString(msg_provider_dest_phone))
 
-store.addCredentials(domain, plivoAuth)
+store.addCredentials(domain, msg_providerAuth)
 store.addCredentials(domain, statuspageAPIKey)
-store.addCredentials(domain, plivoSrc)
-store.addCredentials(domain, plivoDst)
+store.addCredentials(domain, msg_providerSrc)
+store.addCredentials(domain, msg_providerDst)
 
 // Create job
 logger.info('Creating first pipeline job.')

@@ -12,16 +12,16 @@ jenkins_admin_username: "{{ ansible_env.JENKINS_ADMIN_USERNAME }}"
 jenkins_admin_password: "{{ ansible_env.JENKINS_ADMIN_PASSWORD }}"
 jenkins_plugins: "{{ ansible_env.jenkins_plugins }}"
 
-sonar_server_url: "{{ ansible_env.SONAR_SERVER_URL }}"
-sonar_runner_version: "{{ ansible_env.SONAR_RUNNER_VERSION }}"
+sonarqube_server_url: "{{ ansible_env.SONARQUBE_SERVER_URL }}"
+sonar_scanner_version: "{{ ansible_env.SONAR_SCANNER_VERSION }}"
 
 caddy_pipeline_job: "{{ ansible_env.CADDY_PIPELINE_JOB }}"
 caddy_pipeline_repo: "{{ ansible_env.CADDY_PIPELINE_REPO }}"
 caddy_pipeline_file: "{{ ansible_env.CADDY_PIPELINE_FILE }}"
 
-plivo_auth_id: "{{ ansible_env.PLIVO_AUTH_ID }}"
-plivo_auth_token: "{{ ansible_env.PLIVO_AUTH_TOKEN }}"
-plivo_src_phone: "{{ ansible_env.PLIVO_SRC_PHONE }}"
-plivo_dest_phone: "{{ ansible_env.PLIVO_DEST_PHONE }}"
+msg_provider_auth_id: "{{ ansible_env.MSG_PROVIDER_AUTH_ID }}"
+msg_provider_auth_token: "{{ ansible_env.MSG_PROVIDER_AUTH_TOKEN }}"
+msg_provider_src_phone: "{{ ansible_env.MSG_PROVIDER_SRC_PHONE }}"
+msg_provider_dest_phone: "{{ ansible_env.MSG_PROVIDER_DEST_PHONE }}"
 
 statuspage_api_key: "{{ ansible_env.STATUSPAGE_API_KEY }}"
