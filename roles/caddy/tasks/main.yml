@@ -5,7 +5,7 @@
 
 - name: Download and extract caddy.
   unarchive:
-    src: "{{ initial_caddy_version }}"
+    src: "{{ caddy_download_url }}"
     dest: /usr/local/bin/
     remote_src: True
     mode: 0755
