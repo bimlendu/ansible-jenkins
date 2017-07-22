@@ -9,6 +9,8 @@ import jenkins.model.Jenkins
 import java.util.logging.Logger
 
 def logger = Logger.getLogger("")
+def jenkins = Jenkins.getInstance()
+
 def sonarqube_server_url = "{{ sonarqube_server_url }}"
 def sonar_scanner_version = "{{ sonar_scanner_version }}"
 

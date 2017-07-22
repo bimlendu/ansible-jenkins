@@ -37,8 +37,6 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
-  notify:
-    - restart jenkins
 
 - name: Add intial setup script.
   template:
@@ -47,18 +45,14 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
-  notify:
-    - restart jenkins
 
 - name: Add intial setup script.
   template:
-    src: initial-setup.groovy
+    src: bb-setup.groovy
     dest: "{{ jenkins_home }}/init.groovy.d/bb-setup.groovy"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
-  notify:
-    - restart jenkins
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
@@ -67,8 +61,6 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     remote_src: True
-  notify:
-    - restart jenkins
 
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
