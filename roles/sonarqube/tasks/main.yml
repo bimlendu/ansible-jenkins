@@ -23,41 +23,17 @@
   template:
     src: sonar.properties
     dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
-  notify:
-    - restart sonar
 
 - name: Download sonar-golang plugin
   get_url:
     url: "{{ sonarqube_golang_plugin_url }}"
     dest: "{{ sonarqube_install_dir }}/extensions/plugins/"
     mode: 0644
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
-  notify:
-    - restart sonar
 
 - name: Add sonarqube systemd unit.
   template:
     src: sonar.service
     dest: /etc/systemd/system/sonar.service
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
-  notify:
-    - restart sonar
 
 - name: Enable/Start Sonarqube
   systemd: state=started name=sonar.service daemon_reload=yes enabled=yes
-
-- wait_for:
-    host: 0.0.0.0
-    port: 9000
-    delay: 60
-    timeout: 600

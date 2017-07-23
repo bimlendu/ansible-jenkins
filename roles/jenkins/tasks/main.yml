@@ -24,17 +24,16 @@
     state: present
     update_cache: yes
 
+- name: Disable Jenkins startup.
+  copy:
+    src: policy-rc.d
+    dest: /usr/sbin/policy-rc.d
+
 - name: Install packages.
   apt:
     name:
       - jenkins={{ jenkins_version }}
     state: installed
-
-- wait_for:
-    host: 0.0.0.0
-    port: 8080
-    delay: 60
-    timeout: 600
 
 - name: Disable Jenkins CLI over Remoting
   copy:
@@ -43,10 +42,6 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0644
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
 
 - name: Create custom init scripts directory.
   file:
@@ -65,13 +60,8 @@
     mode: 0775
   with_fileglob:
     - ../templates/*
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
   notify:
     - restart jenkins
-
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
@@ -80,10 +70,16 @@
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     remote_src: True
-  register: result
-  until: not result|failed
-  delay: 5
-  retries: 10
 
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
+
+- name: Clean init.groovy.d dir.
+  file:
+    state: absent
+    path: "{{ jenkins_home }}/init.groovy.d"
+
+- name: Remove policy-rd.d.
+  file:
+    state: absent
+    path: /usr/sbin/policy-rc.d
