@@ -7,7 +7,7 @@ import hudson.security.*
 import hudson.tools.*
 import jenkins.model.Jenkins
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
-import jenkins.security.s2m.AdminWhitelistRule
+import java.util.logging.Logger
 
 def logger = Logger.getLogger("")
 def jenkins = Jenkins.getInstance()

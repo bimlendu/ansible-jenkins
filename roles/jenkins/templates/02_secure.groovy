@@ -6,6 +6,7 @@ import hudson.model.*
 import hudson.security.*
 import hudson.tools.*
 import jenkins.model.Jenkins
+import jenkins.security.s2m.AdminWhitelistRule
 import java.util.logging.Logger
 
 def logger = Logger.getLogger("")

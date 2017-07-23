@@ -26,8 +26,8 @@ Thread.start {
 	logger.info('Creating pipeline job: ' + caddy_pipeline_job)
 
 	def caddy_pipeline_exists = false
-	Jenkins.instance.getAllItems().each { it ->
-		if (it.fullName == caddy_pipeline_job) {
+	Jenkins.instance.getAllItems().each { j ->
+		if (j.fullName == caddy_pipeline_job) {
 	    	caddy_pipeline_exists = true
 	    	logger.info("Found existing job: " + caddy_pipeline_job)
 	  	}
