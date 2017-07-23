@@ -1,6 +1,11 @@
 #!groovy
-import hudson.model.*
+import jenkins.*
 import jenkins.model.*
+import hudson.*
+import hudson.model.*
+import hudson.security.*
+import hudson.tools.*
+import jenkins.model.Jenkins
 import hudson.plugins.sonar.*
 import hudson.plugins.sonar.model.TriggersConfig
 import hudson.plugins.sonar.utils.SQServerVersions

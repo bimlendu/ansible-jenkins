@@ -1,8 +1,12 @@
 #!groovy
-import hudson.model.*
+import jenkins.*
 import jenkins.model.*
-import org.jenkinsci.plugins.golang.*
+import hudson.*
+import hudson.model.*
+import hudson.security.*
 import hudson.tools.*
+import jenkins.model.Jenkins
+import org.jenkinsci.plugins.golang.*
 import java.util.logging.Logger
 
 def logger = Logger.getLogger("")

@@ -1,6 +1,10 @@
 #!groovy
-import hudson.model.*
+import jenkins.*
 import jenkins.model.*
+import hudson.*
+import hudson.model.*
+import hudson.security.*
+import hudson.tools.*
 import jenkins.model.Jenkins
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
 import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition

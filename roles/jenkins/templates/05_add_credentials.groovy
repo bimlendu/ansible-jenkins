@@ -1,4 +1,11 @@
 #!groovy
+import jenkins.*
+import jenkins.model.*
+import hudson.*
+import hudson.model.*
+import hudson.security.*
+import hudson.tools.*
+import jenkins.model.Jenkins
 import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
@@ -6,6 +13,10 @@ import com.cloudbees.plugins.credentials.impl.*
 import org.jenkinsci.plugins.plaincredentials.*
 import org.jenkinsci.plugins.plaincredentials.impl.*
 import hudson.util.Secret
+import java.util.logging.Logger
+
+def logger = Logger.getLogger("")
+def jenkins = Jenkins.getInstance()
 
 def msg_provider_auth_id = "{{ msg_provider_auth_id }}"
 def msg_provider_auth_token = "{{ msg_provider_auth_token }}"

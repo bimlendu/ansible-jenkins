@@ -1,3 +1,17 @@
+#!groovy
+import jenkins.*
+import jenkins.model.*
+import hudson.*
+import hudson.model.*
+import hudson.security.*
+import hudson.tools.*
+import jenkins.model.Jenkins
+import org.jenkinsci.plugins.scriptsecurity.scripts.*
+import jenkins.security.s2m.AdminWhitelistRule
+
+def logger = Logger.getLogger("")
+def jenkins = Jenkins.getInstance()
+
 // Approve scripts
 logger.info('Pre-approving required signatures.')
 
