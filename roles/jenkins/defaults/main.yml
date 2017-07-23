@@ -27,3 +27,5 @@ msg_provider_src_phone: "{{ ansible_env.MSG_PROVIDER_SRC_PHONE }}"
 msg_provider_dest_phone: "{{ ansible_env.MSG_PROVIDER_DEST_PHONE }}"
 
 statuspage_api_key: "{{ ansible_env.STATUSPAGE_API_KEY }}"
+
+shared_library: https://github.com/bimlendu/pipeline-shared-libs.git
