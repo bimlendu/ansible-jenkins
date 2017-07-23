@@ -74,11 +74,6 @@
 - name: Ensure Jenkins is started and runs on startup.
   service: name=jenkins state=started enabled=yes
 
-- name: Clean init.groovy.d dir.
-  file:
-    state: absent
-    path: "{{ jenkins_home }}/init.groovy.d"
-
 - name: Remove policy-rd.d.
   file:
     state: absent
