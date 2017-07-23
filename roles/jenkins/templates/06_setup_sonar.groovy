@@ -1,3 +1,4 @@
+#!groovy
 import hudson.model.*
 import jenkins.model.*
 import hudson.plugins.sonar.*
@@ -10,13 +11,13 @@ def logger = Logger.getLogger("")
 def sonarqube_server_url = "{{ sonarqube_server_url }}"
 def sonar_scanner_version = "{{ sonar_scanner_version }}"
 
-def instance = Jenkins.getInstance()
+def jenkins = Jenkins.getInstance()
 
 Thread.start {
     sleep 10000
     
     logger.info('Configuring SonarQube.')
-    def SonarGlobalConfiguration sonar_conf = instance.getDescriptor(SonarGlobalConfiguration.class)
+    def SonarGlobalConfiguration sonar_conf = jenkins.getDescriptor(SonarGlobalConfiguration.class)
 
     def sonar_inst = new SonarInstallation(
         "ADOP Sonar", // Name
@@ -53,11 +54,11 @@ Thread.start {
 
     // Sonar Scanner
     logger.info('Configuring SonarScanner.')
-    def desc_SonarRunnerInst = instance.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
+    def desc_SonarRunnerInst = jenkins.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
 
     def sonarRunnerInstaller = new SonarRunnerInstaller(sonar_scanner_version)
     def installSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
-    def sonarRunner_inst = new SonarRunnerInstallation("ADOP SonarRunner " + sonar_scanner_version, "", [installSourceProperty])
+    def sonarRunner_inst = new SonarRunnerInstallation("SonarScanner", "", [installSourceProperty])
 
     // Only add SonarScanner if it does not exist - do not overwrite existing config
     def sonar_scanner_installations = desc_SonarRunnerInst.getInstallations()
@@ -77,5 +78,5 @@ Thread.start {
     }
 
     // Save the state
-    instance.save()
+    jenkins.save()
 }

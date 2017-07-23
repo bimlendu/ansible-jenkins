@@ -46,21 +46,15 @@
     group: "{{ jenkins_process_group }}"
     mode: 0775
 
-- name: Add intial setup script.
+- name: Add init scripts
   template:
-    src: aa-install-plugins.groovy
-    dest: "{{ jenkins_home }}/init.groovy.d/aa-install-plugins.groovy"
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
-
-- name: Add intial setup script.
-  template:
-    src: bb-setup.groovy
-    dest: "{{ jenkins_home }}/init.groovy.d/bb-setup.groovy"
-    owner: "{{ jenkins_process_user }}"
-    group: "{{ jenkins_process_group }}"
-    mode: 0775
+  with_fileglob:
+    - ../templates/*
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
