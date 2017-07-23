@@ -13,9 +13,6 @@
     opts: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,_netdev
     state: mounted
 
-- pause:
-    minutes: 1
-
 - name: Add Jenkins apt repository key.
   apt_key:
     url: "{{ jenkins_repo_key_url }}"
@@ -32,9 +29,6 @@
     name:
       - jenkins={{ jenkins_version }}
     state: installed
-
-- pause:
-    minutes: 1
 
 - name: Disable Jenkins CLI over Remoting
   copy:
