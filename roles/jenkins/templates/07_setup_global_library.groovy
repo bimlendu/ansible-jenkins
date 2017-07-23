@@ -25,7 +25,7 @@ SCMSourceRetriever retriever = new SCMSourceRetriever(new GitSCMSource(
     "",
     false))
 LibraryConfiguration pipeline = new LibraryConfiguration("mySharedLibs", retriever)
-pipeline.setDefaultVersion(env.BRANCH_NAME)
+pipeline.setDefaultVersion('master')
 pipeline.setImplicit(true)
 globalLibsDesc.get().setLibraries([pipeline])
 
