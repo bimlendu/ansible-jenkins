@@ -49,7 +49,7 @@
 - name: Add init scripts
   template:
     src: "{{ item }}"
-    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item | basename }}"
     owner: "{{ jenkins_process_user }}"
     group: "{{ jenkins_process_group }}"
     mode: 0775
