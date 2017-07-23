@@ -44,7 +44,7 @@
     group: "{{ jenkins_process_group }}"
     mode: 0644
   register: result
-  until: result.state == 'success'
+  until: not result|failed
   delay: 5
   retries: 10
 
