@@ -55,6 +55,8 @@
     mode: 0775
   with_fileglob:
     - ../templates/*
+  notify:
+    - restart jenkins
 
 - name: Bypass - jenkins.install.InstallUtil.lastExecVersion
   copy:
