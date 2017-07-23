@@ -22,7 +22,7 @@ logger.info('Configuring SonarQube.')
 def SonarGlobalConfiguration sonar_conf = jenkins.getDescriptor(SonarGlobalConfiguration.class)
 
 def sonar_inst = new SonarInstallation(
-    "ADOP Sonar", // Name
+    "Sonar", // Name
     sonarqube_server_url,
     SQServerVersions.SQ_5_3_OR_HIGHER, // Major version upgrade of server would require to change it
     "", // Token
