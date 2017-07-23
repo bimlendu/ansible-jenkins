@@ -23,6 +23,10 @@
   template:
     src: sonar.properties
     dest: "{{ sonarqube_install_dir }}/conf/sonar.properties"
+  register: result
+  until: not result|failed
+  delay: 5
+  retries: 10
   notify:
     - restart sonar
 
@@ -31,6 +35,10 @@
     url: "{{ sonarqube_golang_plugin_url }}"
     dest: "{{ sonarqube_install_dir }}/extensions/plugins/"
     mode: 0644
+  register: result
+  until: not result|failed
+  delay: 5
+  retries: 10
   notify:
     - restart sonar
 
@@ -38,6 +46,10 @@
   template:
     src: sonar.service
     dest: /etc/systemd/system/sonar.service
+  register: result
+  until: not result|failed
+  delay: 5
+  retries: 10
   notify:
     - restart sonar
 
