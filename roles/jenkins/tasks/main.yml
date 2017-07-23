@@ -30,6 +30,12 @@
       - jenkins={{ jenkins_version }}
     state: installed
 
+- wait_for:
+    host: 0.0.0.0
+    port: 8080
+    delay: 60
+    timeout: 600
+
 - name: Disable Jenkins CLI over Remoting
   copy:
     src: jenkins.CLI.xml

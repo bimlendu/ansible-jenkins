@@ -55,3 +55,9 @@
 
 - name: Enable/Start Sonarqube
   systemd: state=started name=sonar.service daemon_reload=yes enabled=yes
+
+- wait_for:
+    host: 0.0.0.0
+    port: 9000
+    delay: 60
+    timeout: 600
